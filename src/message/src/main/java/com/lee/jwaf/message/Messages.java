@@ -89,7 +89,7 @@ public enum Messages {
      * @return baseName set
      */
     protected static Set<String> getBaseNames() {
-        return System.getProperties().contains(CNS_KEY_BASE_NAME)
+        return System.getProperties().containsKey(CNS_KEY_BASE_NAME)
                 ? new HashSet<>(Arrays.asList(System.getProperty(CNS_KEY_BASE_NAME).split(","))) : new HashSet<>();
     }
 
