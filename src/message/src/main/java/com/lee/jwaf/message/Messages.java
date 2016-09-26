@@ -61,10 +61,14 @@ public enum Messages {
      */
     protected static Locale getLocale() {
         try {
+            Class.forName("javax.servlet.http.HttpServletResponse");
             Class<?> context = Class.forName("com.lee.jwaf.context.ActionContext");
             Object instance = context.getMethod("getContext", new Class<?>[] {}).invoke(null);
             Locale locale = (Locale) context.getMethod("getLocale", new Class<?>[] {}).invoke(instance);
-            return locale;
+            if (!ObjectUtils.isEmpty(locale)) {
+                return locale;
+            }
+            throw new Exception();
         } catch (Exception e) {
             String language = System.getProperty(CNS_KEY_LANGUAGE);
             String country = System.getProperty(CNS_KEY_COUNTRY);
@@ -85,7 +89,8 @@ public enum Messages {
      * @return baseName set
      */
     protected static Set<String> getBaseNames() {
-        return new HashSet<>(Arrays.asList(System.getProperty(CNS_KEY_BASE_NAME).split(",")));
+        return System.getProperties().contains(CNS_KEY_BASE_NAME)
+                ? new HashSet<>(Arrays.asList(System.getProperty(CNS_KEY_BASE_NAME).split(","))) : new HashSet<>();
     }
 
     /**
