@@ -16,6 +16,7 @@ hs_err_pid*
 .project
 .classpath
 .idea
+*.iml
 
 # Maven generated files
 target
